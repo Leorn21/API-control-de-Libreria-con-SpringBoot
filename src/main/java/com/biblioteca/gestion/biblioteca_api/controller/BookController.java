@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -20,6 +21,16 @@ public class BookController {
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
+    
+    @GetMapping("/{id}")
+    public Optional<Book> getBookById(@PathVariable Long id) {
+        return bookRepository.findById(id);
+    }
+
+    @GetMapping("/search/{author}")
+    public List<Book> getBookByAuthor(@PathVariable String author){
+        return bookRepository.findByAuthor(author);
+    }
 
     @PostMapping
     public Book createBook(@RequestBody Book book) {
@@ -32,4 +43,3 @@ public class BookController {
         return ResponseEntity.noContent().build();
     }
 }
-
